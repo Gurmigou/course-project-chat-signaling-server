@@ -3,12 +3,12 @@ export const RoomStorage = class {
         this.map = new Map();
     }
 
-    addUserToRoomIfNotExists(userId, roomId, socketId) {
+    addUserToRoomIfNotExists(username, roomId, socketId) {
         let usersInRoom = this.map.get(roomId);
-        let userToAdd = {userId, socketId};
+        let userToAdd = {username: username, socketId};
         if (!usersInRoom) {
             this.map.set(roomId, [userToAdd]);
-        } else if (!usersInRoom.find(u => u.userId === userId)) {
+        } else if (!usersInRoom.find(u => u.username === username)) {
             usersInRoom.push(userToAdd);
         }
     }
@@ -16,7 +16,7 @@ export const RoomStorage = class {
     getPeerByRoomId(roomId, currentUserId) {
         let usersInRoom = this.map.get(roomId) || [];
         for (const user of usersInRoom) {
-            if (user.userId !== currentUserId) {
+            if (user.username !== currentUserId) {
                 return user;
             }
         }
@@ -25,7 +25,7 @@ export const RoomStorage = class {
 
     removeUserFromRoom(userId, roomId) {
         let usersInRoom = this.map.get(roomId) || [];
-        let index = usersInRoom.findIndex(user => user.userId === userId);
+        let index = usersInRoom.findIndex(user => user.username === userId);
         if (index > -1) {
             usersInRoom.splice(index, 1);
         }
