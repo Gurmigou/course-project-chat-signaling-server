@@ -1,5 +1,5 @@
 import {Server} from "socket.io";
-import {RoomStorage} from "./roomStorage.js";
+import {RoomStorage} from "./RoomStorage.js";
 
 const io = new Server(3020);
 const roomStorage = new RoomStorage();
